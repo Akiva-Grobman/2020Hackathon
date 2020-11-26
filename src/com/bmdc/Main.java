@@ -12,9 +12,10 @@ public class Main {
         dataBase = new DataBase(keyInput);
         window = new Window(dataBase);
         window.addKeyListener(keyInput);
-        final double FRAMES_PER_SECOND = 60;
+        final double FRAMES_PER_SECOND = 15;
         double timePerUpdate = 1000000000 / FRAMES_PER_SECOND;
         double timeFromLastUpdate = 0;
+        int count = 0;
         long now;
         long last = System.nanoTime();
         while (gameLoopIsRunning) {
@@ -22,9 +23,14 @@ public class Main {
             timeFromLastUpdate += (now - last) / timePerUpdate;
             last = now;
             if(timeFromLastUpdate >= 1) {
+                count++;
                 tick();
                 render();
                 timeFromLastUpdate--;
+                if(count >= 15) {
+                    count = 0;
+                    dataBase.second();
+                }
             }
         }
     }

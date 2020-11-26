@@ -7,9 +7,10 @@ import java.util.Arrays;
 public class DataBase {
 
     private final KeyInput keyInput;
+    private int previousX;
+    private int previousY;
     private int pieceX;
     private int pieceY;
-    private int[][] lastBoard;
     private int[][] board;
     private int[][] currentPiece;
     private int[][] nextPiece;
@@ -20,14 +21,15 @@ public class DataBase {
         nextPiece = Pieces.getRandomPiece();
         pieceX = 4;
         pieceY = 0;
+        previousX = 4;
+        previousY = 0;
         board = initBoard();
-        lastBoard = initBoard();
     }
 
     private int[][] initBoard() {
         int[][] init = new int[12][24];
         for (int[] line: init) {
-            Arrays.fill(line, 3);
+            Arrays.fill(line, 0);
         }
         return init;
     }
@@ -37,7 +39,6 @@ public class DataBase {
         for (int i = 0; i < colors.length; i++) {
             for (int j = 0; j < colors[i].length; j++) {
                 colors[i][j] = getColor(board[i][j]);
-                lastBoard[i][j] = board[i][j];
             }
         }
         return colors;
@@ -112,34 +113,45 @@ public class DataBase {
                 }
             }
             if(canMove) {
-                board = getRotatedInstanceOfPiece(board);
-                board = getRotatedInstanceOfPiece(board);
-                board = getRotatedInstanceOfPiece(board);
+                currentPiece = getRotatedInstanceOfPiece(getRotatedInstanceOfPiece(getRotatedInstanceOfPiece(currentPiece)));
             }
         }
         // down
         if(isClickingDown) {
-            boolean canMove = true;
-            for (int i = 0; i < currentPiece.length; i++) {
-                for (int j = 0; j < currentPiece[i].length; j++) {
-                    if (currentPiece[i][j] != 0) {
-                        if (i - 1 >= 0 && currentPiece[i - 1][j] == 0) {
-                            if (board[pieceX + i - 1][j] != 0) {
-                                canMove = false;
+            if(pieceY + 4 < 24) {
+                boolean canMove = true;
+//            for (int k = 0; k < 2; k++) {
+                for (int i = 0; i < currentPiece.length; i++) {
+                    for (int j = 0; j < currentPiece[i].length; j++) {
+                        if (currentPiece[i][j] != 0) {
+                            if (j + 1 < 4 && currentPiece[i][j + 1] == 0) {
+                                if (board[pieceX + i][pieceY + j + 1] != 0) {
+                                    canMove = false;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
-            }
-            if(canMove) {
-                if (pieceY + 6 < 24) {
-                    pieceY += 2;
-                } else if (pieceY + 5 < 24) {
+                if (canMove) {
                     pieceY++;
-                } else {
+                }
+//            }
+                if (!canMove || pieceY >= 19) {
                     currentPiece = nextPiece;
                     nextPiece = Pieces.getRandomPiece();
+                    pieceX = 4;
+                    pieceY = 0;
+                    previousY = 4;
+                    previousX = 0;
                 }
+            } else {
+                currentPiece = nextPiece;
+                nextPiece = Pieces.getRandomPiece();
+                pieceX = 4;
+                pieceY = 0;
+                previousY = 4;
+                previousX = 0;
             }
         }
         concatenate();
@@ -148,7 +160,18 @@ public class DataBase {
     private void concatenate() {
         for (int i = 0; i < currentPiece.length; i++) {
             for (int j = 0; j < currentPiece[i].length; j++) {
-                board[pieceX  + i][pieceY + j] = currentPiece[i][j];
+                if(currentPiece[i][j] != 0) {
+                    board[previousX + i][previousY + j] = 0;
+                }
+            }
+        }
+        previousX = pieceX;
+        previousY = pieceY;
+        for (int i = 0; i < currentPiece.length; i++) {
+            for (int j = 0; j < currentPiece[i].length; j++) {
+                if(currentPiece[i][j] != 0) {
+                    board[pieceX + i][pieceY + j] = currentPiece[i][j];
+                }
             }
         }
     }
@@ -177,6 +200,13 @@ public class DataBase {
             }
         }
         return rotated;
+    }
+
+    public void second() {
+        if(pieceY < 19) {
+            pieceY++;
+            concatenate();
+        }
     }
 
 }

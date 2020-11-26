@@ -50,11 +50,7 @@ public class Display extends JPanel {
         for (int x = 1230; x < 1390; x += 40) {
             i = 0;
             for (int y = 50; y < 80; y += 40) {
-                if (shape[i][j] == 1) {
-                    graphics.setColor(Color.cyan);
-                } else {
-                    graphics.setColor(Color.black);
-                }
+                graphics.setColor(getColor(shape[i][j]));
                 graphics.fillRect(x, y, SIZE, SIZE);
                 i++;
             }
@@ -66,11 +62,7 @@ public class Display extends JPanel {
         for (int x = 1230; x < 1390; x += 40) {
             j1 = 0;
             for (int y = 120; y < 200; y += 40) {
-                if (shape1[j1][i1] == 1) {
-                    graphics.setColor(Color.blue);
-                } else {
-                    graphics.setColor(Color.black);
-                }
+                graphics.setColor(getColor(shape1[j1][i1]));
                 graphics.fillRect(x, y, SIZE, SIZE);
                 j1++;
             }
@@ -82,11 +74,7 @@ public class Display extends JPanel {
         for (int x = 1230; x < 1390; x += 40) {
             j2 = 0;
             for (int y = 240; y < 320; y += 40) {
-                if (shape2[j2][i2] == 1) {
-                    graphics.setColor(Color.orange);
-                } else {
-                    graphics.setColor(Color.black);
-                }
+                graphics.setColor(getColor(shape2[j2][i2]));
                 graphics.fillRect(x, y, SIZE, SIZE);
                 j2++;
             }
@@ -98,11 +86,7 @@ public class Display extends JPanel {
         for (int x = 1230; x < 1390; x += 40) {
             j3 = 0;
             for (int y = 360; y < 440; y += 40) {
-                if (shape3[j3][i3] == 1) {
-                    graphics.setColor(Color.yellow);
-                } else {
-                    graphics.setColor(Color.black);
-                }
+                graphics.setColor(getColor(shape3[j3][i3]));
                 graphics.fillRect(x, y, SIZE, SIZE);
                 j3++;
             }
@@ -114,11 +98,7 @@ public class Display extends JPanel {
         for (int x = 1230; x < 1390; x += 40) {
             j4 = 0;
             for (int y = 480; y < 560; y += 40) {
-                if (shape4[j4][i4] == 1) {
-                    graphics.setColor(Color.green);
-                } else {
-                    graphics.setColor(Color.black);
-                }
+                graphics.setColor(getColor(shape4[j4][i4]));
                 graphics.fillRect(x, y, SIZE, SIZE);
                 j4++;
             }
@@ -130,11 +110,7 @@ public class Display extends JPanel {
         for (int x = 1230; x < 1390; x += 40) {
             j5 = 0;
             for (int y = 600; y < 680; y += 40) {
-                if (shape5[j5][i5] == 1) {
-                    graphics.setColor(Color.red);
-                } else {
-                    graphics.setColor(Color.black);
-                }
+                graphics.setColor(getColor(shape5[j5][i5]));
                 graphics.fillRect(x, y, SIZE, SIZE);
                 j5++;
             }
@@ -146,15 +122,25 @@ public class Display extends JPanel {
         for (int x = 1230; x < 1390; x += 40) {
             j6 = 0;
             for (int y = 720; y < 800; y += 40) {
-                if (shape6[j6][i6] == 1) {
-                    graphics.setColor(Color.pink);
-                } else {
-                    graphics.setColor(Color.black);
-                }
+                graphics.setColor(getColor(shape6[j6][i6]));
                 graphics.fillRect(x, y, SIZE, SIZE);
                 j6++;
             }
             i6++;
         }
     }
+
+    private Color getColor(int code) {
+        return switch (code) {
+            case 1 -> Color.cyan;
+            case 2 -> Color.blue;
+            case 3 -> Color.orange;
+            case 4 -> Color.yellow;
+            case 5 -> Color.green;
+            case 6 -> Color.pink;
+            case 7 -> Color.red;
+            default -> Color.black;
+        };
+    }
+
 }
