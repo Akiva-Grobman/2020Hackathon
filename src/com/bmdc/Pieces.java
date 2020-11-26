@@ -27,6 +27,7 @@ public abstract class Pieces {
         };
 
     }
+
     public static int[][] blue() {
         return new int[][]{
                 {0, 2, 0, 0},
@@ -35,6 +36,7 @@ public abstract class Pieces {
                 {0, 0, 0, 0},
         };
     }
+
     public static int[][] orange () {
         return new int[][]{
                 {0, 0, 3, 0},
@@ -53,6 +55,7 @@ public abstract class Pieces {
         };
 
     }
+
     public static int[][] green () {
         return new int[][]{
                 {0, 5, 5, 0},
@@ -61,6 +64,7 @@ public abstract class Pieces {
                 {0, 0, 0, 0},
         };
     }
+
     public static int[][] red() {
         return new int[][]{
                 {7, 7, 0, 0},
@@ -69,6 +73,7 @@ public abstract class Pieces {
                 {0, 0, 0, 0},
         };
     }
+
     public static int[][] pink () {
         return new int[][]{
                 {0, 6, 0, 0},

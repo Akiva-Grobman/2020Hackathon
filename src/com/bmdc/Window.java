@@ -9,10 +9,8 @@ public class Window extends JFrame {
     private static final int WIDTH =  350 * FACTOR;
     private static final int HEIGHT = 250 * FACTOR;
     private final Display display;
-    private DataBase dataBase;
 
-    public Window(DataBase dataBase) {
-        this.dataBase = dataBase;
+    public Window() {
         display = new Display(new Dimension(WIDTH, HEIGHT));
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,10 +26,11 @@ public class Window extends JFrame {
 
 
     public void setBoard(Color[][] board) {
-        display.setColors(board);
+        display.setBoard(board);
     }
 
     public void setNextPiece(Color[][] nextPiece) {
         display.setNextPiece(nextPiece);
     }
+
 }

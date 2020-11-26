@@ -8,10 +8,12 @@ public class Main {
 
     public static void main(String[] args) {
         gameLoopIsRunning = true;
+
         KeyInput keyInput = new KeyInput();
         dataBase = new DataBase(keyInput);
-        window = new Window(dataBase);
+        window = new Window();
         window.addKeyListener(keyInput);
+
         final double FRAMES_PER_SECOND = 15;
         double timePerUpdate = 1000000000 / FRAMES_PER_SECOND;
         double timeFromLastUpdate = 0;
@@ -48,6 +50,7 @@ public class Main {
 
     public static void stop() {
         gameLoopIsRunning = false;
+        System.exit(0);
     }
 
 

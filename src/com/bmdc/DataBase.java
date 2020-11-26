@@ -12,6 +12,7 @@ public class DataBase {
     private int pieceX;
     private int pieceY;
     private int[][] board;
+    private int[][] previousPiece;
     private int[][] currentPiece;
     private int[][] nextPiece;
 
@@ -23,6 +24,7 @@ public class DataBase {
         pieceY = 0;
         previousX = 4;
         previousY = 0;
+        previousPiece = currentPiece;
         board = initBoard();
     }
 
@@ -139,7 +141,7 @@ public class DataBase {
 //            }
                 if (!canMove || pieceY >= 19) {
                     currentPiece = nextPiece;
-                    nextPiece = Pieces.getRandomPiece();
+                    nextPiece = getRotatedInstanceOfPiece(getRotatedInstanceOfPiece(Pieces.getRandomPiece()));
                     pieceX = 4;
                     pieceY = 0;
                     previousY = 4;
@@ -147,7 +149,7 @@ public class DataBase {
                 }
             } else {
                 currentPiece = nextPiece;
-                nextPiece = Pieces.getRandomPiece();
+                nextPiece = getRotatedInstanceOfPiece(getRotatedInstanceOfPiece(Pieces.getRandomPiece()));
                 pieceX = 4;
                 pieceY = 0;
                 previousY = 4;
@@ -160,13 +162,14 @@ public class DataBase {
     private void concatenate() {
         for (int i = 0; i < currentPiece.length; i++) {
             for (int j = 0; j < currentPiece[i].length; j++) {
-                if(currentPiece[i][j] != 0) {
+                if(previousPiece[i][j] != 0) {
                     board[previousX + i][previousY + j] = 0;
                 }
             }
         }
         previousX = pieceX;
         previousY = pieceY;
+        previousPiece = currentPiece;
         for (int i = 0; i < currentPiece.length; i++) {
             for (int j = 0; j < currentPiece[i].length; j++) {
                 if(currentPiece[i][j] != 0) {
@@ -204,6 +207,7 @@ public class DataBase {
 
     public void second() {
         if(pieceY < 19) {
+            previousY = pieceY;
             pieceY++;
             concatenate();
         }
